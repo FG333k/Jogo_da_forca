@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.IOException;
 
 public class Jogo{
 
@@ -10,8 +11,16 @@ public class Jogo{
 
     //Método para limpar tela
     static void limparTela(){
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        String os = System.getProperty("os.name");
+        try{
+            if(os.contains("Windows")){
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            }else{
+                Runtime.getRuntime().exec("clear");
+            }
+        } catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }   
     }
 
     //Método para exibir a interface do jogo
@@ -32,6 +41,7 @@ public class Jogo{
             }
         }
 
+        limparTela();
         //Interface principal
         System.out.println("=====JOGO DA FORCA=====\n");
         System.out.println("[1]Jogador: " + ponto1 + "     [2]Jogador: " + ponto2 + "\n");
@@ -57,6 +67,7 @@ public class Jogo{
         boolean reinicioJogo = true;    //Atributo para logica de atualização de interface
 
         do { 
+            limparTela();
             System.out.println("=====JOGO DA FORCA=====\n");
             System.out.print("Palavara secreta: ");
             String palavra = scanner.nextLine().toUpperCase();  //Atributição de nome apartir do objeto

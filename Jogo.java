@@ -16,7 +16,7 @@ public class Jogo{
             if(os.contains("Windows")){
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             }else{
-                Runtime.getRuntime().exec("clear");
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         } catch(IOException | InterruptedException e){
             e.printStackTrace();
